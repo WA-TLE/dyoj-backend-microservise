@@ -3,8 +3,6 @@ package com.dy;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -12,10 +10,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.dy.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
-public class DyojBackendUserServiceApplication {
+public class DyojBackendJudgeServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DyojBackendUserServiceApplication.class, args);
+        SpringApplication.run(DyojBackendJudgeServiceApplication.class, args);
     }
 
 }

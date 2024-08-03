@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.dy</groupId>
     <artifactId>dyoj-backend-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>dyoj-backend-common</name>
@@ -30,6 +31,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
