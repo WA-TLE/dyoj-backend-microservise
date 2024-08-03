@@ -4,11 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DyojBackendMicroserviseApplication {
+public class DyojBackendModelApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DyojBackendMicroserviseApplication.class, args);
+        SpringApplication.run(DyojBackendModelApplication.class, args);
     }
-
 
 }
