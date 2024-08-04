@@ -19,7 +19,7 @@ import com.dy.exception.BusinessException;
 import com.dy.exception.ThrowUtils;
 import com.dy.service.QuestionService;
 import com.dy.service.QuestionSubmitService;
-import com.dy.service.UserService;
+import com.dy.client.service.UserFeignClient;
 import com.dy.vo.QuestionSubmitVO;
 import com.dy.vo.QuestionVO;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +46,7 @@ public class QuestionController {
 
 
     @Resource
-    private UserService userService;
+    private UserFeignClient userService;
 
     // region 增删改查
 
@@ -108,7 +108,7 @@ public class QuestionController {
         Question oldQuestion = questionService.getById(id);
         ThrowUtils.throwIf(oldQuestion == null, ErrorCode.NOT_FOUND_ERROR);
         // 仅本人或管理员可删除
-        if (!oldQuestion.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
+        if (!oldQuestion.getUserId().equals(user.getId()) && !userService.isAdmin(user)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         boolean b = questionService.removeById(id);

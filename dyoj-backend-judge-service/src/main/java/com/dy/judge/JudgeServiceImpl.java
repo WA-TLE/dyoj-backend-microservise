@@ -15,8 +15,7 @@ import com.dy.exception.BusinessException;
 import com.dy.judge.codesanbox.CodeSanBox;
 import com.dy.judge.codesanbox.CodeSanBoxFactory;
 import com.dy.judge.codesanbox.proxy.CodeSanBoxProxy;
-import com.dy.service.QuestionService;
-import com.dy.service.QuestionSubmitService;
+import com.dy.client.service.QuestionFeignClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +32,11 @@ import java.util.stream.Collectors;
 @Service
 public class JudgeServiceImpl implements JudgeService {
 
-    @Resource
-    private QuestionSubmitService questionSubmitService;
+//    @Resource
+//    private QuestionSubmitService questionSubmitService;
 
     @Resource
-    private QuestionService questionService;
+    private QuestionFeignClient questionFeignClient;
 
     @Resource
     private CodeSanBoxFactory codeSanBoxFactory;
@@ -54,7 +53,7 @@ public class JudgeServiceImpl implements JudgeService {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         //  获取用户提交信息
-        QuestionSubmit questionSubmit = questionSubmitService.getById(questionSubmitId);
+        QuestionSubmit questionSubmit = questionFeignClient.getQuestionSubmitById(questionSubmitId);
         String language = questionSubmit.getLanguage();
         String code = questionSubmit.getCode();
         Long questionId = questionSubmit.getQuestionId();
@@ -70,13 +69,13 @@ public class JudgeServiceImpl implements JudgeService {
         QuestionSubmit questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.RUNNING.getValue());
         questionSubmitUpdate.setId(questionSubmitId);
-        boolean update = questionSubmitService.updateById(questionSubmitUpdate);
+        boolean update = questionFeignClient.updateQuestionSubmitById(questionSubmitUpdate);
         if (!update) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "更新题目信息失败");
         }
 
         //  获取题目信息
-        Question question = questionService.getById(questionId);
+        Question question = questionFeignClient.getQuestionById(questionId);
 
         //  获取题目测试用例
         String judgeCase = question.getJudgeCase();
@@ -112,11 +111,11 @@ public class JudgeServiceImpl implements JudgeService {
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
         questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
 
-        update = questionSubmitService.updateById(questionSubmitUpdate);
+        update = questionFeignClient.updateQuestionSubmitById(questionSubmitUpdate);
         if (!update) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目状态更新错误");
         }
 
-        return questionSubmitService.getById(questionId);
+        return questionFeignClient.getQuestionSubmitById(questionId);
     }
 }

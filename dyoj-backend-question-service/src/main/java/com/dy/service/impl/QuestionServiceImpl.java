@@ -12,9 +12,8 @@ import com.dy.entity.User;
 import com.dy.exception.BusinessException;
 import com.dy.exception.ThrowUtils;
 import com.dy.mapper.QuestionMapper;
-
 import com.dy.service.QuestionService;
-import com.dy.service.UserService;
+import com.dy.client.service.UserFeignClient;
 import com.dy.utils.SqlUtils;
 import com.dy.vo.QuestionVO;
 import com.dy.vo.UserVO;
@@ -40,7 +39,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
 
 
     @Resource
-    private UserService userService;
+    private UserFeignClient userFeignClient;
 
 
     @Override
@@ -120,9 +119,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         Long userId = question.getUserId();
         User user = null;
         if (userId != null && userId > 0) {
-            user = userService.getById(userId);
+            user = userFeignClient.getById(userId);
         }
-        UserVO userVO = userService.getUserVO(user);
+        UserVO userVO = userFeignClient.getUserVO(user);
         questionVO.setUserVO(userVO);
 
         return questionVO;
@@ -138,7 +137,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         // 1. 关联查询用户信息
         // TODO: 2024/7/14  尝试着看懂它
         Set<Long> userIdSet = questionList.stream().map(Question::getUserId).collect(Collectors.toSet());
-        Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
+        Map<Long, List<User>> userIdUserListMap = userFeignClient.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));
 
         // 填充信息
@@ -149,7 +148,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
             if (userIdUserListMap.containsKey(userId)) {
                 user = userIdUserListMap.get(userId).get(0);
             }
-            questionVO.setUserVO(userService.getUserVO(user));
+            questionVO.setUserVO(userFeignClient.getUserVO(user));
 
             return questionVO;
         }).collect(Collectors.toList());

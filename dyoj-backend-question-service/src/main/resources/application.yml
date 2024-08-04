@@ -36,6 +36,18 @@ spring:
     multipart:
       # 大小限制
       max-file-size: 10MB
+  cloud:
+    nacos:
+      config:
+        import-check.enabled: false
+      server-addr: 8.130.9.216:8848
+  main:
+    allow-bean-definition-overriding: true
+
+feign:
+  okhttp:
+    enabled: true # 开启OKHttp功能
+
 server:
   address: 0.0.0.0
   port: 8102

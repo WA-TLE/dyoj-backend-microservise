@@ -3,6 +3,8 @@ package com.dy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.dy.client.service.JudgeFeignClient;
+import com.dy.client.service.UserFeignClient;
 import com.dy.common.ErrorCode;
 import com.dy.constant.CommonConstant;
 import com.dy.dto.questionsubmit.QuestionSubmitAddRequest;
@@ -14,11 +16,7 @@ import com.dy.enums.QuestionSubmitLanguageEnum;
 import com.dy.enums.QuestionSubmitStatusEnum;
 import com.dy.exception.BusinessException;
 import com.dy.mapper.QuestionSubmitMapper;
-
-import com.dy.service.JudgeService;
-import com.dy.service.QuestionService;
-import com.dy.service.QuestionSubmitService;
-import com.dy.service.UserService;
+import com.dy.service.*;
 import com.dy.utils.SqlUtils;
 import com.dy.vo.QuestionSubmitVO;
 import org.apache.commons.collections4.CollectionUtils;
@@ -45,11 +43,11 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
 
 
     @Resource
-    private UserService userService;
+    private UserFeignClient userService;
 
     @Resource
     @Lazy
-    private JudgeService judgeService;
+    private JudgeFeignClient judgeService;
 
     /**
      * 提交题目

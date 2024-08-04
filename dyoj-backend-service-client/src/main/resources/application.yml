@@ -1,9 +1,8 @@
-# 公共配置文件
- 
 spring:
-  application:
-    name: dyoj-backend-judge-service
-  # 默认 dev 环境
+  cloud:
+    nacos:
+      server-addr: 8.130.9.216
+
   profiles:
     active: dev
   # 支持 swagger3
@@ -37,18 +36,9 @@ spring:
       # 大小限制
       max-file-size: 10MB
 
-    config:
-      import-check.enabled: false
-  cloud:
-    nacos:
-      config:
-        import-check.enabled: false
-      server-addr: 8.130.9.216:8848
-  main:
-    allow-bean-definition-overriding: true
 server:
   address: 0.0.0.0
-  port: 8103
+  port: 8101
   servlet:
     context-path: /api
     # cookie 30 天过期
@@ -64,9 +54,6 @@ mybatis-plus:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
-
 feign:
   okhttp:
     enabled: true # 开启OKHttp功能
-codeSanBox:
-  type: remote
