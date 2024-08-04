@@ -67,3 +67,6 @@ feign:
 codeSanBox:
   type: remote
 #debug: true
+logging:
+  level:
+    com.dy: debug

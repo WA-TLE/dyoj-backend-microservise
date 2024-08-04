@@ -70,3 +70,6 @@ feign:
     enabled: true # 开启OKHttp功能
 codeSanBox:
   type: remote
+logging:
+  level:
+    com.dy: debug

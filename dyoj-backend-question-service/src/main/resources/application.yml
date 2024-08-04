@@ -70,3 +70,6 @@ mybatis-plus:
 
 codeSanBox:
   type: remote
+logging:
+  level:
+    com.dy: debug

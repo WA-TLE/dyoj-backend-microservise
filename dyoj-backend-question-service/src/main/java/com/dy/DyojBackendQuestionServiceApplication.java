@@ -1,5 +1,6 @@
 package com.dy;
 
+import com.dy.client.config.DefaultFeignConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.dy.client.service")
+@EnableFeignClients(basePackages = "com.dy.client.service", defaultConfiguration = DefaultFeignConfig.class)
 public class DyojBackendQuestionServiceApplication {
 
     public static void main(String[] args) {

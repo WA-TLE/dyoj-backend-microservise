@@ -57,3 +57,6 @@ mybatis-plus:
 feign:
   okhttp:
     enabled: true # 开启OKHttp功能
+logging:
+  level:
+    com.dy: debug
