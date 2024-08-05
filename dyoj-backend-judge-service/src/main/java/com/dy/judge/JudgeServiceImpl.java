@@ -41,7 +41,7 @@ public class JudgeServiceImpl implements JudgeService {
     @Resource
     private CodeSanBoxFactory codeSanBoxFactory;
 
-    @Value("${codeSanBox.type}")
+    @Value("${codeSandBox.type}")
     private String type;
 
     @Resource

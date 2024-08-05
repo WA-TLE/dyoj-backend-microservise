@@ -1,17 +1,56 @@
-spring:
-  application:
-    name: dyoj-backend-gateway
+#spring:
+#  application:
+#    name: dyoj-backend-gateway
+#
+#  cloud:
+#    nacos:
+#      config:
+#        import-check.enabled: false
+#      discovery:
+#        server-addr: 8.130.9.216:8848
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+#      routes:
+#        - id: dyoj-backend-user-service
+#          uri: lb://dyoj-backend-user-service
+#          predicates:
+#            - Path=/api/user/**
+#        - id: dyoj-backend-question-service
+#          uri: lb://dyoj-backend-question-service
+#          predicates:
+#            - Path=/api/question/**
+#        - id: dyoj-backend-judge-service
+#          uri: lb://dyoj-backend-judge-service
+#          predicates:
+#            - Path=/api/judge/**
+#  main:
+#    web-application-type: reactive
+#
+#
+#server:
+#  address: 0.0.0.0
+#  port: 8080
+#  servlet:
+#    context-path: /api
+#    session:
+#      cookie:
+#        max-age: 2592000
+#
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework.cloud.gateway: DEBUG
+#    org.springframework.cloud.netflix: DEBUG
+#    com.alibaba.nacos: DEBUG
 
+spring:
   cloud:
     nacos:
-      config:
-        import-check.enabled: false
       discovery:
         server-addr: 8.130.9.216:8848
     gateway:
-      discovery:
-        locator:
-          enabled: true
       routes:
         - id: dyoj-backend-user-service
           uri: lb://dyoj-backend-user-service
@@ -25,19 +64,23 @@ spring:
           uri: lb://dyoj-backend-judge-service
           predicates:
             - Path=/api/judge/**
+  application:
+    name: dyoj-backend-gateway
   main:
     web-application-type: reactive
-
-
 server:
-  address: 0.0.0.0
-  port: 8080
-  servlet:
-    context-path: /api
-    session:
-      cookie:
-        max-age: 2592000
-
+  port: 8101
+knife4j:
+  gateway:
+    # ① 第一个配置，开启gateway聚合组件
+    enabled: true
+    # ② 第二行配置，设置聚合模式采用discover服务发现的模式
+    strategy: discover
+    discover:
+      # ③ 第三行配置，开启discover模式
+      enabled: true
+      # ④ 第四行配置，聚合子服务全部为Swagger2规范的文档
+      version: swagger2
 logging:
   level:
     root: INFO
