@@ -40,12 +40,13 @@ spring:
     nacos:
       config:
         import-check.enabled: false
-      server-addr: 8.130.9.216:8848
+      discovery:
+        server-addr: 8.130.9.216:8848
   main:
     allow-bean-definition-overriding: true
 server:
   address: 0.0.0.0
-  port: 8101
+  port: 8102
   servlet:
     context-path: /api
     # cookie 30 天过期
