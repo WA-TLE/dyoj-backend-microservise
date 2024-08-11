@@ -5,10 +5,7 @@ import com.dy.entity.QuestionSubmit;
 import com.dy.client.service.QuestionFeignClient;
 import com.dy.service.QuestionService;
 import com.dy.service.QuestionSubmitService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -18,7 +15,7 @@ import javax.annotation.Resource;
  * @Description:
  */
 @RestController
-@RequestMapping("inner/question")
+@RequestMapping("inner")
 public class QuestionInnerController implements QuestionFeignClient {
 
     @Resource
@@ -42,8 +39,8 @@ public class QuestionInnerController implements QuestionFeignClient {
      *
      * @param questionSubmitUpdate
      */
-    @GetMapping("/questionSubmit/update")
-   public Boolean updateQuestionSubmitById(@RequestParam("questionSubmitUpdate") QuestionSubmit questionSubmitUpdate){
+    @PostMapping("/questionSubmit/update")
+   public Boolean updateQuestionSubmitById(@RequestBody QuestionSubmit questionSubmitUpdate){
         return questionSubmitService.updateById(questionSubmitUpdate);
     }
 

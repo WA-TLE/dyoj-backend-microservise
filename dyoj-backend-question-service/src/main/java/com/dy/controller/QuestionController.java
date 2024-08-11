@@ -34,7 +34,7 @@ import java.util.List;
  * 帖子接口
  */
 @RestController
-@RequestMapping("/question")
+@RequestMapping("")
 @Slf4j
 public class QuestionController {
 
@@ -232,7 +232,7 @@ public class QuestionController {
      * @param request
      * @return resultNum 本次提交题目变化数
      */
-    @PostMapping("/questionsubmit/do")
+    @PostMapping("/question_submit/do")
     public BaseResponse<Long> doQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest,
                                                HttpServletRequest request) {
         if (questionSubmitAddRequest == null || questionSubmitAddRequest.getQuestionId() <= 0) {
@@ -254,7 +254,7 @@ public class QuestionController {
      * @return
      */
 
-    @PostMapping("questionsubmit/list/page")
+    @PostMapping("question_submit/list/page")
     public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitVOByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
                                                                            HttpServletRequest request) {
         long current = questionSubmitQueryRequest.getCurrent();

@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @Description:
  */
 @RestController
-@RequestMapping("/inner/judge")
+@RequestMapping("/inner")
 public class JudgeInnerController implements JudgeFeignClient {
 
     @Resource

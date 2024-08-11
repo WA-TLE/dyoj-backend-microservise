@@ -24,7 +24,7 @@ import static com.dy.constant.UserConstant.USER_LOGIN_STATE;
  * 用户服务
  *
  */
-@FeignClient(name = "dyoj-backend-user-service", path = "/api/inner/user")
+@FeignClient(name = "dyoj-backend-user-service", path = "/api/user/inner")
 public interface UserFeignClient  {
 
     //  ● userService.getById(userId)

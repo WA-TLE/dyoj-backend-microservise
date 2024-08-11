@@ -69,7 +69,7 @@ spring:
   main:
     web-application-type: reactive
 server:
-  port: 8101
+  port: 8104
 knife4j:
   gateway:
     # ① 第一个配置，开启gateway聚合组件
@@ -81,9 +81,9 @@ knife4j:
       enabled: true
       # ④ 第四行配置，聚合子服务全部为Swagger2规范的文档
       version: swagger2
-logging:
-  level:
-    root: INFO
-    org.springframework.cloud.gateway: DEBUG
-    org.springframework.cloud.netflix: DEBUG
-    com.alibaba.nacos: DEBUG
+#logging:
+#  level:
+#    root: INFO
+#    org.springframework.cloud.gateway: DEBUG
+#    org.springframework.cloud.netflix: DEBUG
+#    com.alibaba.nacos: DEBUG

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Date: 2024/7/17 21:38
  * @Description:
  */
-@FeignClient(name = "dyoj-backend-judge-service", path = "/api/inner/judge")
+@FeignClient(name = "dyoj-backend-judge-service", path = "/api/judge/inner")
 public interface JudgeFeignClient {
     @PostMapping("/do")
     QuestionSubmit doJudge(@RequestParam("questionSubmitId") Long questionSubmitId);
