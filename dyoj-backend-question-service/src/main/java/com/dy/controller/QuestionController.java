@@ -46,7 +46,7 @@ public class QuestionController {
 
 
     @Resource
-    private UserFeignClient userService;
+    private UserFeignClient userFeignClient;
 
     // region 增删改查
 
@@ -80,7 +80,7 @@ public class QuestionController {
 
 
         questionService.validQuestion(question, true);
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userFeignClient.getLoginUser(request);
         question.setUserId(loginUser.getId());
         question.setFavourNum(0);
         question.setThumbNum(0);
@@ -102,13 +102,13 @@ public class QuestionController {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.getLoginUser(request);
+        User user = userFeignClient.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
         Question oldQuestion = questionService.getById(id);
         ThrowUtils.throwIf(oldQuestion == null, ErrorCode.NOT_FOUND_ERROR);
         // 仅本人或管理员可删除
-        if (!oldQuestion.getUserId().equals(user.getId()) && !userService.isAdmin(user)) {
+        if (!oldQuestion.getUserId().equals(user.getId()) && !userFeignClient.isAdmin(user)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
         boolean b = questionService.removeById(id);
@@ -209,7 +209,7 @@ public class QuestionController {
         if (questionQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userFeignClient.getLoginUser(request);
         questionQueryRequest.setUserId(loginUser.getId());
         long current = questionQueryRequest.getCurrent();
         long size = questionQueryRequest.getPageSize();
@@ -219,10 +219,6 @@ public class QuestionController {
                 questionService.getQueryWrapper(questionQueryRequest));
         return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
     }
-
-
-
-
 
 
     /**
@@ -239,12 +235,32 @@ public class QuestionController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // 登录才能提交题目
-        final User loginUser = userService.getLoginUser(request);
+        final User loginUser = userFeignClient.getLoginUser(request);
         long questionId = questionSubmitAddRequest.getQuestionId();
         long result = questionSubmitService.doQuestionSubmit(questionSubmitAddRequest, loginUser);
 
         return ResultUtils.success(result);
     }
+
+    @GetMapping("/get")
+    public BaseResponse<Question> getQuestionById(long id, HttpServletRequest request) {
+        // 1. 校验 id
+        if (id < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 2. 获取当前登录用户
+        User loginUser = userFeignClient.getLoginUser(request);
+        // 3. 对用户权限进行判断, 如果非管理员, 不能查看题目信息 (这是在题目管理界面的接口, 非管理员不能展示)
+        if (!userFeignClient.isAdmin(loginUser)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        // 4. 查询题目信息
+        Question question = questionService.getById(id);
+        // 5. 返回题目信息
+        return ResultUtils.success(question);
+    }
+
+
 
     /**
      * 查询题目提交列表
@@ -255,6 +271,7 @@ public class QuestionController {
      */
 
     @PostMapping("question_submit/list/page")
+
     public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitVOByPage(@RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest,
                                                                            HttpServletRequest request) {
         long current = questionSubmitQueryRequest.getCurrent();
@@ -263,11 +280,10 @@ public class QuestionController {
                 questionSubmitService.getQueryWrapper(questionSubmitQueryRequest));
 
         //  获取当前登录用户
-        User loginUser = userService.getLoginUser(request);
+        User loginUser = userFeignClient.getLoginUser(request);
 
         return ResultUtils.success(questionSubmitService.getQuestionSubmitVOPage(questionSubmitPage, loginUser));
     }
-
 
 
     // endregion
