@@ -64,6 +64,10 @@ spring:
           uri: lb://dyoj-backend-judge-service
           predicates:
             - Path=/api/judge/**
+        - id: dyoj-backend-file-service
+          uri: lb://dyoj-backend-file-service
+          predicates:
+            - Path=/api/file/**
   application:
     name: dyoj-backend-gateway
   main:

@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * JWT 工具类
  *
- * @author Shier
+ * @author dy
  */
 public class JwtUtils {
 
@@ -65,7 +65,7 @@ public class JwtUtils {
 
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey("shier")
+                    .setSigningKey("dy")
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {

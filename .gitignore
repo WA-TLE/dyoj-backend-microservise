@@ -33,3 +33,4 @@ build/
 .vscode/
 # Ignore all test directories and their contents in any subdirectory
 **/test/
+**/application-secret.yml
