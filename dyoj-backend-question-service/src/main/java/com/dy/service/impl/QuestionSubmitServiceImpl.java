@@ -61,7 +61,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         Long questionId = questionSubmitAddRequest.getQuestionId();
 
         //  判断语言我们是否支持
-        String language = questionSubmitAddRequest.getLanguage();
+        String language = questionSubmitAddRequest.getSubmitLanguage();
         QuestionSubmitLanguageEnum enumByValue = QuestionSubmitLanguageEnum.getEnumByValue(language);
         if (enumByValue == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "编程语言错误");
@@ -79,10 +79,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         QuestionSubmit questionSubmit = new QuestionSubmit();
         questionSubmit.setUserId(userId);
         questionSubmit.setQuestionId(questionId);
-        questionSubmit.setCode(questionSubmitAddRequest.getCode());
-        questionSubmit.setLanguage(language);
+        questionSubmit.setSubmitCode(questionSubmitAddRequest.getSubmitCode());
+        questionSubmit.setSubmitLanguage(language);
         //  设置初始状态
-        questionSubmit.setStatus(QuestionSubmitStatusEnum.WAITING.getValue());
+        questionSubmit.setSubmitState(QuestionSubmitStatusEnum.WAITING.getValue());
         questionSubmit.setJudgeInfo("{}");
 
         // TODO: 2024/7/14 限制用户频繁提交
@@ -115,8 +115,8 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         if (questionSubmitQueryRequest == null) {
             return queryWrapper;
         }
-        String language = questionSubmitQueryRequest.getLanguage();
-        Integer status = questionSubmitQueryRequest.getStatus();
+        String language = questionSubmitQueryRequest.getSubmitLanguage();
+        Integer status = questionSubmitQueryRequest.getSubmitState();
         Long questionId = questionSubmitQueryRequest.getQuestionId();
         Long userId = questionSubmitQueryRequest.getUserId();
         String sortField = questionSubmitQueryRequest.getSortField();

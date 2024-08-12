@@ -54,10 +54,10 @@ public class JudgeServiceImpl implements JudgeService {
         }
         //  获取用户提交信息
         QuestionSubmit questionSubmit = questionFeignClient.getQuestionSubmitById(questionSubmitId);
-        String language = questionSubmit.getLanguage();
-        String code = questionSubmit.getCode();
+        String language = questionSubmit.getSubmitLanguage();
+        String code = questionSubmit.getSubmitCode();
         Long questionId = questionSubmit.getQuestionId();
-        Integer questionSubmitStatus = questionSubmit.getStatus();
+        Integer questionSubmitStatus = questionSubmit.getSubmitState();
 
         if (!Objects.equals(QuestionSubmitStatusEnum.WAITING.getValue(), questionSubmitStatus)) {
             throw new BusinessException(ErrorCode.FORBIDDEN_ERROR, "程序已经执行判题");
@@ -67,7 +67,7 @@ public class JudgeServiceImpl implements JudgeService {
 
         //  更新题目信息
         QuestionSubmit questionSubmitUpdate = new QuestionSubmit();
-        questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.RUNNING.getValue());
+        questionSubmitUpdate.setSubmitState(QuestionSubmitStatusEnum.RUNNING.getValue());
         questionSubmitUpdate.setId(questionSubmit.getId());
         questionSubmitUpdate.setId(questionSubmitId);
         boolean update = questionFeignClient.updateQuestionSubmitById(questionSubmitUpdate);
@@ -110,7 +110,7 @@ public class JudgeServiceImpl implements JudgeService {
         questionSubmitUpdate = new QuestionSubmit();
         questionSubmitUpdate.setId(questionSubmitId);
         questionSubmitUpdate.setJudgeInfo(JSONUtil.toJsonStr(judgeInfo));
-        questionSubmitUpdate.setStatus(QuestionSubmitStatusEnum.SUCCEED.getValue());
+        questionSubmitUpdate.setSubmitState(QuestionSubmitStatusEnum.SUCCEED.getValue());
 
         update = questionFeignClient.updateQuestionSubmitById(questionSubmitUpdate);
         if (!update) {

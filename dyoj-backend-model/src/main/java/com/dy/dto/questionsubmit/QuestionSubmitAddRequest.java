@@ -12,12 +12,12 @@ public class QuestionSubmitAddRequest {
     /**
      * 编程语言
      */
-    private String language;
+    private String submitLanguage;
 
     /**
      * 用户代码
      */
-    private String code;
+    private String submitCode;
 
 
     /**
@@ -29,6 +29,5 @@ public class QuestionSubmitAddRequest {
      * 创建用户 id
      */
     private Long userId;
-
 
 }

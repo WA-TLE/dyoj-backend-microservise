@@ -4,6 +4,8 @@ import com.dy.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 /**
  * @Author: dy
  * @Date: 2024/7/15 19:30
@@ -11,31 +13,28 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class QuestionSubmitQueryRequest extends PageRequest {
-    /**
-     * id
-     */
-    private Long id;
-
-    /**
-     * 编程语言
-     */
-    private String language;
-
-    /**
-     * 判题状态（0 - 待判题、1 - 判题中、2 - 成功、3 - 失败）
-     */
-    private Integer status;
-
-
+public class QuestionSubmitQueryRequest extends PageRequest  implements Serializable {
     /**
      * 题目 id
      */
     private Long questionId;
 
     /**
-     * 创建用户 id
+     * 编程语言
+     */
+    private String submitLanguage;
+
+    /**
+     * 提交状态
+     */
+    private Integer submitState;
+
+
+    /**
+     * 用户 id
      */
     private Long userId;
+
+    private static final long serialVersionUID = 1L;
 
 }
