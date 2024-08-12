@@ -10,8 +10,8 @@ import com.dy.entity.User;
 import com.dy.enums.UserRoleEnum;
 import com.dy.exception.BusinessException;
 import com.dy.mapper.UserMapper;
-
 import com.dy.service.UserService;
+import com.dy.utils.JwtUtils;
 import com.dy.utils.SqlUtils;
 import com.dy.vo.LoginUserVO;
 import com.dy.vo.UserVO;
@@ -20,12 +20,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
 import static com.dy.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
@@ -103,9 +103,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             log.info("user login failed, userAccount cannot match userPassword");
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
         }
-        // 3. 记录用户的登录态
+
+        // 3. 通过 JWT 生成 token(token 中存入用户 id 和账号)
+        Map<String, Object> tokenMap = new HashMap<>();
+        tokenMap.put("id", user.getId());
+        tokenMap.put("userAccount", user.getUserAccount());
+        String token = JwtUtils.getToken(tokenMap);
+
+        // 4. 记录用户登录态, 将 token 储存在 Session 中
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
-        return this.getLoginUserVO(user);
+
+
+        // 5. 返回构造值
+        LoginUserVO loginUserVO = this.getLoginUserVO(user);
+        loginUserVO.setToken(token);
+        return loginUserVO;
     }
 
 
