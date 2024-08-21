@@ -37,11 +37,12 @@ spring:
     nacos:
       discovery:
         server-addr: 8.130.9.216:8848
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    password: guest
-#    username: guest
+  rabbitmq:
+    host: 8.130.9.216 # 你的虚拟机IP
+    port: 5672 # 端口
+    virtual-host: /dyoj # 虚拟主机
+    username: dyoj # 用户名
+    password: dingyu # 密码
 server:
   address: 0.0.0.0
   port: 8103

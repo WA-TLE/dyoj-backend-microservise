@@ -19,9 +19,12 @@ import com.dy.mapper.QuestionSubmitMapper;
 import com.dy.service.*;
 import com.dy.utils.SqlUtils;
 import com.dy.vo.QuestionSubmitVO;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +33,16 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import static com.dy.constant.MqConstant.CODE_QUESTION_EXCHANGE;
+import static com.dy.constant.MqConstant.CODE_QUESTION_ROUTING_KEY;
+
 /**
  * @author 微光
  * @description 针对表【question_submit(题目提交)】的数据库操作Service实现
  * @createDate 2024-07-14 14:18:23
  */
 @Service
+@Slf4j
 public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper, QuestionSubmit>
         implements QuestionSubmitService {
     @Resource
@@ -48,6 +55,9 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     @Lazy
     private JudgeFeignClient judgeService;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 提交题目
@@ -94,11 +104,13 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         // TODO: 2024/7/17 调用判题模块
         Long questionSubmitId = questionSubmit.getId();
 
-        //  异步执行判题服务
-        CompletableFuture.runAsync(() -> {
-            judgeService.doJudge(questionSubmitId);
-        });
 
+        try {
+            log.info("投递到消息队列开启判题, 题目提交 Id: {}", questionSubmit);
+            rabbitTemplate.convertAndSend(CODE_QUESTION_EXCHANGE, CODE_QUESTION_ROUTING_KEY, questionSubmitId);
+        } catch (AmqpException e) {
+            log.error("消息队列执行判题出现错误, 题目提交 Id: {}", questionSubmit, e);
+        }
 
         return questionSubmit.getId();
     }
