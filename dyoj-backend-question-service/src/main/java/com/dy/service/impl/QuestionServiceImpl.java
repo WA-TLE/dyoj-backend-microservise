@@ -90,7 +90,8 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         List<String> tags = questionQueryRequest.getTags();
         Long userId = questionQueryRequest.getUserId();
         String sortField = questionQueryRequest.getSortField();
-        String sortOrder = questionQueryRequest.getSortOrder();
+        String sortOrder = CommonConstant.SORT_ORDER_ASC;
+//        String sortOrder = questionQueryRequest.getSortOrder();
 
 
         queryWrapper.like(StringUtils.isNotBlank(title), "title", title);

@@ -82,7 +82,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.dy.DyojBackendUserServiceApplication</mainClass>
-                    <skip>true</skip>
+                    <!--<skip>true</skip>-->
                 </configuration>
                 <executions>
                     <execution>

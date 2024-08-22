@@ -63,6 +63,6 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 # 代码沙箱配置
 codeSandBox:
-  type: example
+  type: remote
 knife4j:
   enable: true
