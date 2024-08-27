@@ -52,6 +52,8 @@ server:
       cookie:
         max-age: 2592000
         path: /api
+        secure: true
+        same-site: none
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -63,6 +65,6 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
 # 代码沙箱配置
 codeSandBox:
-  type: remote
+  type: example
 knife4j:
   enable: true

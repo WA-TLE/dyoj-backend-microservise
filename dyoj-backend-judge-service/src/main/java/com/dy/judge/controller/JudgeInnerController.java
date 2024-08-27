@@ -1,7 +1,7 @@
 package com.dy.judge.controller;
 
 import com.dy.entity.QuestionSubmit;
-import com.dy.judge.JudgeService;
+import com.dy.judge.service.JudgeService;
 import com.dy.client.service.JudgeFeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

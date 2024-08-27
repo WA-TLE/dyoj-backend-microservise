@@ -1,0 +1,29 @@
+
+spring:
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.130.9.216:3306/dy_oj
+    username: root
+    password: dingyu@.
+  # Redis 配置
+  redis:
+    database: 1
+    host: 8.130.9.216
+    port: 6379
+    timeout: 5000
+    password: dingyu@.
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 8.130.9.216:8848
+  rabbitmq:
+    host: 8.130.9.216
+    port: 5672
+    virtual-host: /dyoj # 虚拟主机
+    username: dyoj # 用户名
+    password: dingyu # 密码

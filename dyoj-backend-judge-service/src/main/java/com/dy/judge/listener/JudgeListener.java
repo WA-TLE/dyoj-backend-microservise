@@ -1,6 +1,6 @@
 package com.dy.judge.listener;
 
-import com.dy.judge.JudgeService;
+import com.dy.judge.service.JudgeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;

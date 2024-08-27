@@ -50,6 +50,10 @@ spring:
     nacos:
       discovery:
         server-addr: 8.130.9.216:8848
+  # 默认 dev 环境
+  profiles:
+    active: dev
+
     gateway:
       routes:
         - id: dyoj-backend-user-service
@@ -74,6 +78,11 @@ spring:
     web-application-type: reactive
 server:
   port: 8104
+  servlet:
+    session:
+      cookie:
+        secure: true
+        same-site: none
 knife4j:
   gateway:
     # ① 第一个配置，开启gateway聚合组件

@@ -45,6 +45,8 @@ server:
       cookie:
         max-age: 2592000
         path: /api
+        secure: true
+        same-site: none
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

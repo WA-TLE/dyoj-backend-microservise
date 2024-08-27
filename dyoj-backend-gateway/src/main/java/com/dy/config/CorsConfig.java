@@ -20,8 +20,9 @@ public class CorsConfig {
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
         // todo 实际改为线上真实域名、本地域名
-        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:8080", "http://127.0.0.1:8080", "http://oj.dycoding.com", "http://8.130.9.216:80",
-                "https://localhost:8080", "https://127.0.0.1:8080", "https://oj.dycoding.com", "https://8.130.9.216:80"));
+        config.setAllowedOriginPatterns(Arrays.asList("http://localhost:8080",  "http://oj.dycoding.com", "http://8.130.9.216:80",
+                "https://localhost:8080", "https://oj.dycoding.com", "https://8.130.9.216:80",
+                "http://www.oj.dycoding.com","https://www.oj.dycoding.com"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
         source.registerCorsConfiguration("/**", config);
         return new CorsWebFilter(source);

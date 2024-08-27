@@ -79,6 +79,7 @@ public class QuestionController {
         }
 
 
+        // TODO: 2024/8/25 前端似乎没有传过来 userId
         questionService.validQuestion(question, true);
         User loginUser = userFeignClient.getLoginUser(request);
         question.setUserId(loginUser.getId());

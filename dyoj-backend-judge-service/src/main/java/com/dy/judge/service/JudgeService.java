@@ -1,4 +1,4 @@
-package com.dy.judge;
+package com.dy.judge.service;
 
 
 import com.dy.entity.QuestionSubmit;

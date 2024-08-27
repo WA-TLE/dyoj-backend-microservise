@@ -17,7 +17,7 @@ public class JudgeManager {
      * @param judgeContext
      * @return
      */
-    JudgeInfo doJudge(JudgeContext judgeContext) {
+    public JudgeInfo doJudge(JudgeContext judgeContext) {
         QuestionSubmit questionSubmit = judgeContext.getQuestionSubmit();
         // TODO: 2024/7/23 这里关于判题机制的选择, 可以再优雅一点
         String language = questionSubmit.getSubmitLanguage();
