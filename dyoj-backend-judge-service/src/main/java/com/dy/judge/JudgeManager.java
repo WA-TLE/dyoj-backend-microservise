@@ -8,6 +8,9 @@ import com.dy.judge.strategy.JavaLanguageJudgeStrategy;
 import com.dy.judge.strategy.JudgeStrategy;
 import org.springframework.stereotype.Service;
 
+/**
+ * 判题策略类, 根据题目的编程语言, 选择不同的判题策略
+ */
 @Service
 public class JudgeManager {
 
