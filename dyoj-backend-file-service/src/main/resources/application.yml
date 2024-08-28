@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: dyoj-backend-file-service
+  # 默认 dev 环境
+  profiles:
+    active: dev
+  # 文件上传
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
+  # 注册到 nacos 服务
+  cloud:
+    nacos:
+      server-addr: 8.130.9.216:8848
+  config:
+    import: application-secret.yml
+  redis:
+    database: 1
+    host: 8.130.9.216
+    port: 6379
+    timeout: 5000
+    password: dingyu@.
+server:
+  address: 0.0.0.0
+  port: 8108
+  servlet:
+    context-path: /api/file
+    # cookie 30 天过期
+    session:
+      cookie:
+        max-age: 2592000
+        path: /api
+        secure: true
+        same-site: none
+# 开启knife4j接口文档
+knife4j:
+  enable: true
+# todo 阿里云对象存储
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      accessKeyId: ${secret.client.accessKeyId}
+      accessKeySecret: ${secret.client.accessKeySecret}
+      bucketName: ${secret.client.bucketName}
