@@ -1,6 +1,7 @@
 package com.dy.judge.codesanbox.impl;
 
 
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.dy.codesanbox.ExecuteCodeRequest;
@@ -35,11 +36,18 @@ public class ExampleCodeSanBox implements CodeSanBox {
         String jsonStr = JSONUtil.toJsonStr(executeCodeRequest);
 
         //  利用 hutool 工具类调用
-        String responseStr = HttpUtil.createPost(url)
-                .header(AUTH_REQUEST_HEADER, AUTH_REQUEST_SECRET)
-                .body(jsonStr)
-                .execute()
-                .body();
+        String responseStr = null;
+        try {
+            responseStr = HttpUtil.createPost(url)
+                    .header(AUTH_REQUEST_HEADER, AUTH_REQUEST_SECRET)
+                    .body(jsonStr)
+                    .execute()
+                    .body();
+        } catch (HttpException e) {
+            log.info("调用 example 代码沙箱服务失败: ", e);
+//            throw new RuntimeException(e);
+        }
+
         ExecuteCodeResponse executeCodeResponse = JSONUtil.toBean(responseStr, ExecuteCodeResponse.class);
 
         log.info("请求得到的结果: {}", executeCodeResponse);
