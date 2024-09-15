@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author 微光
- * @description 针对表【question(帖子)】的数据库操作Service实现
+ * @description 针对表【question(题目)】的数据库操作Service实现
  * @createDate 2024-07-14 10:24:31
  */
 @Service

@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 帖子接口
+ * 题目接口
  */
 @RestController
 @RequestMapping("")
@@ -80,11 +80,11 @@ public class QuestionController {
 
 
         // TODO: 2024/8/25 前端似乎没有传过来 userId
-        questionService.validQuestion(question, true);
         User loginUser = userFeignClient.getLoginUser(request);
         question.setUserId(loginUser.getId());
         question.setFavourNum(0);
         question.setThumbNum(0);
+        questionService.validQuestion(question, true);
         boolean result = questionService.save(question);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         long newQuestionId = question.getId();
