@@ -15,8 +15,8 @@ import javax.annotation.Resource;
  * @Date: 2024/8/4 12:29
  * @Description:
  */
-@RestController
-@RequestMapping("/inner")
+//@RestController
+//@RequestMapping("/inner")
 public class JudgeInnerController implements JudgeFeignClient {
 
     @Resource
@@ -24,7 +24,7 @@ public class JudgeInnerController implements JudgeFeignClient {
 
     @Override
     @PostMapping("/do")
-    public QuestionSubmit doJudge(@RequestParam("questionSubmitId") Long questionSubmitId) {
-        return judgeService.doJudge(questionSubmitId);
+    public void doJudge(@RequestParam("questionSubmitId") Long questionSubmitId) {
+        judgeService.doJudge(questionSubmitId);
     }
 }

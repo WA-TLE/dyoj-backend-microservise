@@ -15,5 +15,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface JudgeFeignClient {
     // TODO: 2024/8/25 添加 Fallback 逻辑
     @PostMapping("/do")
-    QuestionSubmit doJudge(@RequestParam("questionSubmitId") Long questionSubmitId);
+    void doJudge(@RequestParam("questionSubmitId") Long questionSubmitId);
 }

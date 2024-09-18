@@ -101,7 +101,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目提交保存错误");
         }
 
-        // TODO: 2024/7/17 调用判题模块
+
         Long questionSubmitId = questionSubmit.getId();
 
 
