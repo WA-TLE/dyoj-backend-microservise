@@ -15,6 +15,7 @@ import com.dy.entity.User;
 import com.dy.enums.QuestionSubmitLanguageEnum;
 import com.dy.enums.QuestionSubmitStatusEnum;
 import com.dy.exception.BusinessException;
+import com.dy.manager.RedissonManager;
 import com.dy.mapper.QuestionSubmitMapper;
 import com.dy.service.*;
 import com.dy.utils.SqlUtils;
@@ -59,6 +60,14 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
     @Resource
     private RabbitTemplate rabbitTemplate;
 
+    public static final String USER_QUESTION_SUBMIT = "user_question_submit";
+
+    /**
+     * 限流
+     */
+    @Resource
+    private RedissonManager redissonManager;
+
     /**
      * 提交题目
      *
@@ -76,6 +85,9 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         if (enumByValue == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "编程语言错误");
         }
+
+        //  限流!!!
+        redissonManager.doRateLimit(USER_QUESTION_SUBMIT + loginUser.getId());
 
         // 判断实体是否存在，根据类别获取实体
         Question question = questionService.getById(questionId);

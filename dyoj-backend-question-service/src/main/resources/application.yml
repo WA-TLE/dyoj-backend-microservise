@@ -69,3 +69,4 @@ codeSandBox:
   type: remote
 knife4j:
   enable: true
+debug: true
