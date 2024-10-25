@@ -1,6 +1,5 @@
 package com.dy;
 
-import com.dy.client.config.DefaultFeignConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,5 +19,6 @@ public class DyojBackendJudgeServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(DyojBackendJudgeServiceApplication.class, args);
     }
+
 
 }

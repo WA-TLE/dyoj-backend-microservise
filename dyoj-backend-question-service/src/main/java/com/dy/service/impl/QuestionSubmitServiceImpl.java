@@ -107,15 +107,12 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         questionSubmit.setSubmitState(QuestionSubmitStatusEnum.WAITING.getValue());
         questionSubmit.setJudgeInfo("{}");
 
-        // TODO: 2024/7/14 限制用户频繁提交
         boolean save = this.save(questionSubmit);
         if (!save) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "题目提交保存错误");
         }
 
-
         Long questionSubmitId = questionSubmit.getId();
-
 
         try {
             log.info("投递到消息队列开启判题, 题目提交 Id: {}", questionSubmit);

@@ -140,8 +140,6 @@ public class JudgeServiceImpl implements JudgeService {
             // 异常处理
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "代码沙箱执行失败");
         });
-
-
     }
 
     @PreDestroy
